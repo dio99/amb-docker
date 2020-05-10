@@ -1,0 +1,4 @@
+[mysqld]
+port = 3307
+[mysqld_safe]
+port = 3307
