@@ -30,6 +30,14 @@ configure - ambweb/meta_settings.py
 
 
 
+3) amb_laps
+
+cp conf.yaml local_conf.yaml
+vim local_conf.yaml # update missing options
+
+
+
+
 
 ======= notes =========
 
