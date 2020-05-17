@@ -18,15 +18,18 @@ docker-compose up --build -d
 
 # create MySQL data dir
 
-mkdir ./mysql-datadir
+mkdir -p ./mysql-datadir/ambweb
+mkdir -p ./mysql-datadir/karts
 
 # create .env file 
 
-vim .env_db
+cp .env_db.example .env_karts_db
+cp .env_db.example .env_ambweb_db
 
 2) ambweb
 
 configure - ambweb/meta_settings.py
+mkdir ./AMBWEB_LOG
 
 
 
@@ -37,6 +40,13 @@ vim local_conf.yaml # update missing options
 
 
 
+
+
+======== restore =================
+
+```
+mysql -P 3307 -p -h 127.0.0.1 karts < ambp3client/schema
+```
 
 
 ======= notes =========

@@ -1,2 +1,4 @@
 mysql-datadir
-.env_db
+.env_karts_db
+.env_ambweb_db
+AMBWEB_LOG
