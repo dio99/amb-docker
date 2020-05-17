@@ -52,7 +52,7 @@ services:
 
   amb_test_server:
     build: ./ambp3client
-    command: python /code/test_server/test_server.py ${AMB_TEST_SERVER_FILE:-/code/test_server/out.log} -l ${AMB_TEST_SERVER:-0.0.0.0} -p ${AMB_TEST_SERVER_PORT:-12001}
+    command: python /code/test_server/test_server.py ${AMB_TEST_SERVER_FILE:-/code/test_server/amb.out} -l ${AMB_TEST_SERVER:-0.0.0.0} -p ${AMB_TEST_SERVER_PORT:-12001}
     depends_on:
     - karts_db
     volumes:
