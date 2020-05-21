@@ -8,6 +8,9 @@ mkdir AMB_LAPS_LOGS
 
 chcon -Rt svirt_sandbox_file_t /opt/amb-docker/mysql-datadir/karts/
 chcon -Rt svirt_sandbox_file_t /opt/amb-docker/mysql-datadir/ambweb/
+chcon -Rt svirt_sandbox_file_t AMB_CLIENT_LOGS/
+chcon -Rt svirt_sandbox_file_t AMB_LAPS_LOGS/
+
 
 
 echo "
