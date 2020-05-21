@@ -2,7 +2,7 @@ version: '3'
 services:
   ambweb:
     build: ./ambweb
-    command: /code/manage.py runserver 0.0.0.0:8000 > /var/log/AMB/server.log 2>&1 
+    command: /code/manage.py runserver 0.0.0.0:8000  
     ports:
     - "${AMBWEB_PORT:-8000}:8000"
     depends_on:
@@ -13,7 +13,7 @@ services:
 
   amb_client:
     build: ./ambp3client 
-    command: python /code/amb_client.py -f /code/${AMB_LOCAL_CONF:-local_conf.yaml} > /tmp/amb_client.log 2>&1
+    command: python /code/amb_client.py -f /code/${AMB_LOCAL_CONF:-local_conf.yaml} 
     depends_on:
     - karts_db
     volumes:
@@ -23,7 +23,7 @@ services:
 
   amb_laps:
     build: ./ambp3client 
-    command: python /code/amb_laps.py -f /code/${AMB_LOCAL_CONF:-local_conf.yaml} > /tmp/amb_laps.log 2>&1
+    command: python /code/amb_laps.py -f /code/${AMB_LOCAL_CONF:-local_conf.yaml}
     depends_on:
     - karts_db
     volumes:
