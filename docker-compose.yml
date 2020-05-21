@@ -18,6 +18,8 @@ services:
     - karts_db
     volumes:
     - ./ambp3client:/code
+    - ./AMB_CLIENT_LOGS:/tmp
+
 
   amb_laps:
     build: ./ambp3client
@@ -26,6 +28,7 @@ services:
     - karts_db
     volumes:
     - ./ambp3client:/code
+    - ./AMB_LAPS_LOGS:/tmp
 
   ambweb_db:
     image: "mariadb:10.4"
