@@ -2,3 +2,6 @@ mysql-datadir
 .env_karts_db
 .env_ambweb_db
 AMBWEB_LOG
+AMB_LAPS_LOGS
+AMB_CLIENT_LOGS
+mysql-config/karts/schema
