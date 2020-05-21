@@ -12,8 +12,8 @@ services:
     - ./AMBWEB_LOG:/var/log/AMB/
 
   amb_client:
-    build: ./ambp3client > /tmp/amb_client.log 2>&1
-    command: python /code/amb_client.py -f /code/${AMB_LOCAL_CONF:-local_conf.yaml}
+    build: ./ambp3client 
+    command: python /code/amb_client.py -f /code/${AMB_LOCAL_CONF:-local_conf.yaml} > /tmp/amb_client.log 2>&1
     depends_on:
     - karts_db
     volumes:
@@ -22,8 +22,8 @@ services:
 
 
   amb_laps:
-    build: ./ambp3client > /tmp/amb_laps.log 2>&1
-    command: python /code/amb_laps.py -f /code/${AMB_LOCAL_CONF:-local_conf.yaml}
+    build: ./ambp3client 
+    command: python /code/amb_laps.py -f /code/${AMB_LOCAL_CONF:-local_conf.yaml} > /tmp/amb_laps.log 2>&1
     depends_on:
     - karts_db
     volumes:
