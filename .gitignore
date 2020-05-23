@@ -5,3 +5,4 @@ AMBWEB_LOG
 AMB_LAPS_LOGS
 AMB_CLIENT_LOGS
 mysql-config/karts/schema
+.install_lock

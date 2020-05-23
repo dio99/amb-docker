@@ -17,7 +17,7 @@ services:
     depends_on:
     - karts_db
     volumes:
-    - ./ambp3client:/code
+    - ./ambp3client:/code:Z
     - ./AMB_CLIENT_LOGS:/tmp
 
 
@@ -27,7 +27,7 @@ services:
     depends_on:
     - karts_db
     volumes:
-    - ./ambp3client:/code
+    - ./ambp3client:/code:Z
     - ./AMB_LAPS_LOGS:/tmp
 
   ambweb_db:
@@ -53,14 +53,15 @@ services:
     ports:
     - "${KARTS_MYSQL_PORT:-3307}:3307"
 
-  amb_test_server:
-    build: ./ambp3client
-    command: python /code/test_server/test_server.py ${AMB_TEST_SERVER_FILE:-/code/test_server/amb.out} -l ${AMB_TEST_SERVER:-0.0.0.0} -p ${AMB_TEST_SERVER_PORT:-12001}
-    depends_on:
-    - karts_db
-    volumes:
-    - ./ambp3client:/code
-    ports:
-    - "${AMB_TEST_SERVER_PORT:-12001}:${AMB_TEST_SERVER_PORT:-12001}"
+#  amb_test_server:
+#    build: ./ambp3client
+#    command: python /code/test_server/test_server.py ${AMB_TEST_SERVER_FILE:-/tmp/amb_test_data} -l ${AMB_TEST_SERVER:-0.0.0.0} -p ${AMB_TEST_SERVER_PORT:-12001}
+#    depends_on:
+#    - karts_db
+#    volumes:
+#    - ./ambp3client:/code:z
+#    - ./AMB_TEST_SERVER:/tmp
+#    ports:
+#    - "${AMB_TEST_SERVER_PORT:-12001}:${AMB_TEST_SERVER_PORT:-12001}"
 
 

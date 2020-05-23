@@ -53,3 +53,14 @@ mysql -P 3307 -p -h 127.0.0.1 karts < ambp3client/schema
 
 # any cahnge to .env_db should be ignored
 git update-index --skip-worktree .env_db
+
+
+
+# RUNING TEST SERVER
+
+```
+cd ambp3client
+python3 -m venv venv
+source venv/bin/activate
+./test_server/test_server.py test_server/amb.out
+```
