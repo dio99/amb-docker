@@ -68,7 +68,7 @@ DIRS = ['/code/races/templates']
 LOGFILE = '/var/log/AMB/dajngo_debug.log'
 ER_LOGFILE = '/var/log/AMB/dajngo_debug.log'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-" >> ambweb/ambweb/meta_settings.py
+" > ambweb/ambweb/meta_settings.py
     
     echo "UPDATING: ambp3client/local_conf.yaml"
     echo "---

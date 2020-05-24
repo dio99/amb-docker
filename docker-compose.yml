@@ -3,6 +3,8 @@ services:
   ambweb:
     build: ./ambweb
     command: /code/manage.py runserver 0.0.0.0:8000  
+    environment:
+    - PYTHONUNBUFFERED=TRUE
     ports:
     - "${AMBWEB_PORT:-8000}:8000"
     depends_on:
