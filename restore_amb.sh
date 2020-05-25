@@ -20,6 +20,7 @@ else
     chcon -Rt svirt_sandbox_file_t $ROOT_DIR/mysql-config/karts/
     chcon -Rt svirt_sandbox_file_t $ROOT_DIR/AMB_CLIENT_LOGS/
     chcon -Rt svirt_sandbox_file_t $ROOT_DIR/AMB_LAPS_LOGS/
+    chcon -Rt svirt_sandbox_file_t $ROOT_DIR/AMBWEB_LOG
     
     
     DB_ROOT_PWD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 24 | head -n 1)

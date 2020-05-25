@@ -10,7 +10,7 @@ services:
     depends_on:
     - ambweb_db
     volumes:
-    - ./ambweb:/code
+    - ./ambweb:/code:Z
     - ./AMBWEB_LOG:/var/log/AMB/
 
   amb_client:
