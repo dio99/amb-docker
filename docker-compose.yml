@@ -6,7 +6,7 @@ services:
     environment:
     - PYTHONUNBUFFERED=TRUE
     ports:
-    - "${AMBWEB_PORT:-8000}:8000"
+    - "${AMBWEB_LISTEN_IP:-127.0.0.1}:${AMBWEB_PORT:-8000}:8000"
     depends_on:
     - ambweb_db
     volumes:
@@ -41,7 +41,7 @@ services:
     volumes:
     - ./mysql-datadir/ambweb:/var/lib/mysql
     ports:
-    - "${AMBWEB_MYSQL_PORT:-3306}:3306"
+    - "${AMBWEB_DB_LISTEN_IP:-127.0.0.1}:${AMBWEB_MYSQL_PORT:-3306}:3306"
 
   karts_db:
     image: "mariadb:10.4"
@@ -53,7 +53,7 @@ services:
     - ./mysql-datadir/karts:/var/lib/mysql
     - ./mysql-config/karts:/etc/mysql/conf.d
     ports:
-    - "${KARTS_MYSQL_PORT:-3307}:3307"
+    - "${KARTS_DB_LISTEN_IP:-127.0.0.1}:${KARTS_MYSQL_PORT:-3307}:3307"
 
 #  amb_test_server:
 #    build: ./ambp3client
