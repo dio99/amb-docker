@@ -6,7 +6,7 @@ services:
     environment:
     - PYTHONUNBUFFERED=TRUE
     ports:
-    - "${AMBWEB_LISTEN_IP:-127.0.0.1}:${AMBWEB_PORT:-8000}:8000"
+    - "${AMBWEB_PORT:-8000}:8000"
     depends_on:
     - ambweb_db
     volumes:
