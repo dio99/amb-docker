@@ -1,26 +1,43 @@
 #!/usr/bin/bash
 
-if [ -f .install_lock ]
+
+export PALETTE_RED='\e[31m'
+export PALETTE_RESET='\e[0m'
+export PALETTE_BOLD='\e[1m'
+export PALETTE_PURPLE='\e[35m'
+export PALETTE_GREEN='\e[32m'
+export PALETTE_YELLOW='\e[33m'
+
+
+SCRIPT=$(basename $0)
+AMB_DOCKER_DIR=$(pwd)
+if [ -f $AMB_DOCKER_DIR/$SCRIPT ];
 then
-    echo "FOUND: .install_lock will not install"
-    echo "run setup manually"
+        echo -e "${PALETTE_YELLOW}Running${PALETTE_RESET} amb_docker prepare"
 else
-    #$ROOT_DIR='/opt/amb-docker/'
-    ROOT_DIR='/home/vmindru/proj/amb-docker/'
-    
-    mkdir -p mysql-datadir/ambweb
-    mkdir -p mysql-datadir/karts
-    mkdir AMBWEB_LOG
-    mkdir AMB_CLIENT_LOGS
-    mkdir AMB_LAPS_LOGS
-    mkdir chcon -Rt svirt_sandbox_file_t AMB_TEST_SERVER
-    
-    chcon -Rt svirt_sandbox_file_t $ROOT_DIR/mysql-datadir/karts/
-    chcon -Rt svirt_sandbox_file_t $ROOT_DIR/mysql-datadir/ambweb/
-    chcon -Rt svirt_sandbox_file_t $ROOT_DIR/mysql-config/karts/
-    chcon -Rt svirt_sandbox_file_t $ROOT_DIR/AMB_CLIENT_LOGS/
-    chcon -Rt svirt_sandbox_file_t $ROOT_DIR/AMB_LAPS_LOGS/
-    chcon -Rt svirt_sandbox_file_t $ROOT_DIR/AMBWEB_LOG
+        echo -e "${PALETTE_RED}ERROR:${PALETTE_RESET} script needs to be executed from amb_docker dir"
+        exit 1
+fi
+
+
+if [ -f $AMB_DOCKER_DIR/.install_lock ]
+then
+    echo -e "${PALETTE_PURPLE}FOUND:${PALETTE_RESET} .install_lock, skiping configs install"
+else
+    [ -d  mysql-datadir/ambweb ] ||  mkdir -p mysql-datadir/ambweb
+    [ -d  mysql-datadir/ambweb ] ||  mkdir -p mysql-datadir/karts
+    [ -d AMBWEB_LOG ] ||  mkdir AMBWEB_LOG 
+    [ -d AMB_CLIENT_LOGS ] ||  mkdir AMB_CLIENT_LOGS 
+    [ -d AMB_LAPS_LOGS ] ||  mkdir AMB_LAPS_LOGS 
+    [ -d AMB_TEST_SERVER ] ||  mkdir AMB_TEST_SERVER 
+
+    chcon -Rt svirt_sandbox_file_t $AMB_DOCKER_DIR/AMB_TEST_SERVER
+    chcon -Rt svirt_sandbox_file_t $AMB_DOCKER_DIR/mysql-datadir/karts/
+    chcon -Rt svirt_sandbox_file_t $AMB_DOCKER_DIR/mysql-datadir/ambweb/
+    chcon -Rt svirt_sandbox_file_t $AMB_DOCKER_DIR/mysql-config/karts/
+    chcon -Rt svirt_sandbox_file_t $AMB_DOCKER_DIR/AMB_CLIENT_LOGS/
+    chcon -Rt svirt_sandbox_file_t $AMB_DOCKER_DIR/AMB_LAPS_LOGS/
+    chcon -Rt svirt_sandbox_file_t $AMB_DOCKER_DIR/AMBWEB_LOG
     
     
     DB_ROOT_PWD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 24 | head -n 1)
@@ -86,7 +103,7 @@ mysql_host: '$KARTS_DB_HOST'
     " > ambp3client/local_conf.yaml
     
     
-    echo "UPDATE: .env_karts_db"
+    echo "UPDATING: .env_karts_db"
     echo "MYSQL_ROOT_PASSWORD=$DB_ROOT_PWD
 MYSQL_USER=$KARTS_DB_USER
 MYSQL_PASSWORD=$KARTS_DB_PWD
@@ -94,7 +111,7 @@ MYSQL_DATABASE=$KARTS_DB
 MYSQL_PORT=$KARTS_DB_PORT
 " > .env_karts_db
     
-    echo "UPDATE: .env_ambweb_db"
+    echo "UPDATING: .env_ambweb_db"
     echo "MYSQL_ROOT_PASSWORD=$DB_ROOT_PWD
 MYSQL_USER=$AMBWEB_DB_USER
 MYSQL_PASSWORD=$AMBWEB_DB_PWD
@@ -102,12 +119,18 @@ MYSQL_DATABASE=$AMBWEB_DB
 MYSQL_PORT=$AMBWEB_DB_PORT
 " > .env_ambweb_db
     
-    touch $ROOT_DIR/.install_lock
+    touch $AMB_DOCKER_DIR/.install_lock
     
 fi
 
+echo -e "${PALETTE_GREEN}###########################################
+########################################### 
+#######  PREPARE FINISHED NOW RUN  ########
+########################################### 
+###########################################${PALETTE_RESET}"
+
 echo "podman-compose up --build -d"
 echo "#podman ps #check containers" 
-echo "restore DB: podman exec -i  amb-docker_karts_db_1 sh -c 'mysql -u root -pPASSWORD karts' < ./ambp3client/schema"
+echo "restore DB: podman exec -i  amb-docker_karts_db_1 sh -c 'mysql -u root -p$KARTS_DB_PWD karts' < ./ambp3client/schema"
 
 

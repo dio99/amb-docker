@@ -1,11 +1,21 @@
 #!/usr/bin/bash
 
-mkdir mysql-datadir/ambweb
-mkdir mysql-datadir/karts
-mkdir AMBWEB_LOG
+SCRIPT=$(basename $0)
+AMB_DOCKER_DIR=$(pwd)
+if [ -f $AMB_DOCKER_DIR/$SCRIPT ];
+then
+        echo "Starting amb_docker prepare"
+else
+        echo "script needs to be executed from amb_docker dir"
+        exit 1
+fi
 
-chcon -Rt svirt_sandbox_file_t /opt/amb-docker/mysql-datadir/karts/
-chcon -Rt svirt_sandbox_file_t /opt/amb-docker/mysql-datadir/ambweb/
+mkdir $AMB_DOCKER_DIR/mysql-datadir/ambweb
+mkdir $AMB_DOCKER_DIR/mysql-datadir/karts
+mkdir $AMB_DOCKER_DIR/AMBWEB_LOG
+
+chcon -Rt svirt_sandbox_file_t $AMB_DOCKER_DIR/mysql-datadir/ambweb
+chcon -Rt svirt_sandbox_file_t $AMB_DOCKER_DIR/mysql-datadir/karts
 
 
 echo "
@@ -30,12 +40,12 @@ DATABASES = {
             'PORT': '3311',
         }
 }
-ALLOWED_HOSTS = ['kart.mindruv.eu', '127.0.0.1',]
-DIRS = ['/home/vmindru/proj/amb/amb_web/races/templates']
+ALLOWED_HOSTS = ['kart.mindruv.eu', '127.0.0.1']
+DIRS = ['/code/ambweb/amb_web/races/templates']
 LOGFILE = '/var/log/AMB/dajngo_debug.log'
 ER_LOGFILE = '/var/log/AMB/dajngo_debug.log'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-" >> ambweb/ambweb/meta_settings.py
+" >> $AMB_DOCKER_DIR/ambweb/ambweb/meta_settings.py
 
 cp ambp3client/conf.yaml ambp3client/local_conf.yaml
 
@@ -48,4 +58,5 @@ echo "CHECK: ambweb/ambweb/meta_settings.py"
 echo "EXEC: podman-compose up --build -d"
 echo "EXEC: podman ps #check containers"
 echo "RESTORE DB: podman exec -i  amb-docker_karts_db_1 sh -c 'mysql -u root -pPASSWORD karts' < ./ambp3client/schema"
+
 
