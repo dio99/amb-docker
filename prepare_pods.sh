@@ -30,7 +30,7 @@ DATABASES = {
             'PORT': '3311',
         }
 }
-ALLOWED_HOSTS = ['kart.mindruv.eu', '127.0.0.1', 'lsv-vm107.rfiserve.net']
+ALLOWED_HOSTS = ['kart.mindruv.eu', '127.0.0.1',]
 DIRS = ['/home/vmindru/proj/amb/amb_web/races/templates']
 LOGFILE = '/var/log/AMB/dajngo_debug.log'
 ER_LOGFILE = '/var/log/AMB/dajngo_debug.log'
