@@ -10,9 +10,9 @@ else
         exit 1
 fi
 
-mkdir $AMB_DOCKER_DIR/mysql-datadir/ambweb
-mkdir $AMB_DOCKER_DIR/mysql-datadir/karts
-mkdir $AMB_DOCKER_DIR/AMBWEB_LOG
+mkdir -p $AMB_DOCKER_DIR/mysql-datadir/ambweb
+mkdir -p $AMB_DOCKER_DIR/mysql-datadir/karts
+mkdir -p $AMB_DOCKER_DIR/AMBWEB_LOG
 
 chcon -Rt svirt_sandbox_file_t $AMB_DOCKER_DIR/mysql-datadir/ambweb
 chcon -Rt svirt_sandbox_file_t $AMB_DOCKER_DIR/mysql-datadir/karts
